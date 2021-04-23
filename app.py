@@ -21,7 +21,7 @@ def predict():
     #output = round(prediction[0], 2)
     output = sum(int_features)
     return render_template('index.html', 
-                   prediction_text=f'Employee Salary should be $ {output}')
+                   prediction_text=f'Srinivas ek number ka CHUTIYA hai !!!')
 
 
 if __name__ == "__main__":
