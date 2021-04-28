@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'prabhu'
 
 
-@app.route('/', methods=['POST', 'GET'])
-@app.route('/home', methods=['POST', 'GET'])
+@app.route('/', methods=['POST'])
+@app.route('/home', methods=['POST'])
 def home_page():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -23,14 +23,7 @@ def home_page():
             prediction = "The lead may Convert"
         else: prediction = "The lead might not Convert"
         return render_template('index_bootstrap.html',form=form, prediction=prediction)
-    #int_features = [int(x) for x in request.form.values()]
-    #final_features = [np.array(int_features)]
-    #prediction = model.predict(final_features)
-    #
-    #output = round(prediction[0], 2)
-    #output = sum(int_features)
-    #return render_template('index.html', 
-    #               prediction_text=f'Employee Salary should be $ {output}')
+
     return render_template('index_bootstrap.html', form=form)
 
 @app.route('/metrics')
