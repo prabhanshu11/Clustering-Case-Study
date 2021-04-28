@@ -73,6 +73,7 @@ def get_acc_recall(train_pred: 'pd.DataFrame'):
     f1 = metrics.f1_score(train_pred.y_actual, train_pred.y_pred)
     print(f'Accuracy = {a:0.2} Sensitivity/Recall = {s:0.2}   f1 score = {f1:0.2}')
 
+
 # Saving the model
 pickle.dump(result, open('model.pkl', 'wb'))
 
