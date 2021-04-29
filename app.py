@@ -28,8 +28,7 @@ def home_page():
 
 @app.route('/metrics')
 def metrics_page():
-    items = get_metrics()
-    
+    items = get_metrics() #items is a dictionary
     return render_template('metrics.html', items=items)
 
 if __name__ == "__main__":

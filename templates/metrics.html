@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             <!-- Your rows inside the table HERE: -->
-                {% for item in items %>
+                {% for item in items %}
                     <tr>
                         <td>{{item}}</td>               <!--'item' is each key in dict-->
                         <td>{{items[item]}}</td>        <!--items[item] returns value for each key 'item'-->
@@ -25,6 +25,7 @@
                 {% endfor%}
         </tbody>
     </table>
+
     
 {% endblock %}
 
