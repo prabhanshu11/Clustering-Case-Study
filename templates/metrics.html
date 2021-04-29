@@ -5,34 +5,26 @@
 
 {% block content %}
 
-{% endblock %}
- <table class="table table-hover table-dark">
+
+ <table class="table table-hover w-50 mx-auto container">
         <thead>
             <tr>
                 <!-- Your Columns HERE -->
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Barcode</th>
-                <th scope="col">Price</th>
-                <th scope="col">Options</th>
+                <th scope="col">Metric</th>
+                <th scope="col">Value</th>
             </tr>
         </thead>
         <tbody>
             <!-- Your rows inside the table HERE: -->
-                {% for item in items %}
+                {% for item in items %>
                     <tr>
-                        <td>{{item.id}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.barcode}}</td>
-                        <td>${{item.price}}</td>
-                        <td>
-                            <button class="btn btn-outline btn-info">More Info</button>
-                            <button class="btn btn-outline btn-success">Purchase</button>
-                        </td>
+                        <td>{{item}}</td>               <!--'item' is each key in dict-->
+                        <td>{{items[item]}}</td>        <!--items[item] returns value for each key 'item'-->
+                        
                     </tr>
                 {% endfor%}
         </tbody>
     </table>
     
-
+{% endblock %}
 

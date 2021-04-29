@@ -1,5 +1,5 @@
 import pickle
-from model import CUTOFF
+from model import CUTOFF, train_pred, get_acc_recall
 import numpy as np
 
 model = pickle.load(open('model.pkl', 'rb'))
@@ -30,5 +30,6 @@ def form_predict(data):
     if output >= CUTOFF: return True
     else: return False
     
-data = [0,10,'Other', False]
-form_predict(data)
+def get_metrics():
+    return get_acc_recall(train_pred)
+    

@@ -51,9 +51,7 @@ y = df_dummy[target]
 #Modelling
 model = LogisticRegression(max_iter=500)
 result = model.fit(X, y)
-#X = sm.add_constant(X)
-#model = sm.GLM(y, X, sm.families.Binomial())
-#result = model.fit()
+
 
 def make_train_pred(model_result, X, y_actual, cutoff=0.5):
     train_pred = pd.DataFrame(
@@ -65,8 +63,6 @@ def make_train_pred(model_result, X, y_actual, cutoff=0.5):
 
 train_pred = make_train_pred(result, X, y, cutoff=CUTOFF)
 
-#print(train_pred.head())
-
 def get_acc_recall(train_pred: 'pd.DataFrame'):
     """
     DataFrame with columns: ['pred_prob', 'y_pred', 'y_actual']
@@ -76,7 +72,9 @@ def get_acc_recall(train_pred: 'pd.DataFrame'):
     a = metrics.accuracy_score(train_pred.y_actual, train_pred.y_pred)
     s = metrics.recall_score(train_pred.y_actual, train_pred.y_pred)
     f1 = metrics.f1_score(train_pred.y_actual, train_pred.y_pred)
-    print(f'Accuracy = {a:0.2} Sensitivity/Recall = {s:0.2}   f1 score = {f1:0.2}')
+    return {'Accuracy': np.round(a,2),
+            'Sensitivity/Recall' : np.round(s,2),
+            'f1 score' : np.round(f1,2)}
 
 
 # Saving the model
@@ -84,7 +82,7 @@ pickle.dump(result, open('model.pkl', 'wb'))
 
 # If this file is run and not imported, print the metrics
 if __name__ == '__main__':
-    get_acc_recall(train_pred)
+    print(get_acc_recall(train_pred))
 
     
 # const                                                     1.0
