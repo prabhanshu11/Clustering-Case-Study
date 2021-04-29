@@ -4,8 +4,8 @@ import pickle
 
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import LabelEncoder
-
-import statsmodels.api as sm
+from sklearn.linear_model import LogisticRegression
+#import statsmodels.api as sm
 
 FEATURES = ['TotalVisits', 'Total Time Spent on Website', 'Lead Source_Olark Chat',
             'Lead Source_Reference', 'Lead Source_Welingak Website',
@@ -49,17 +49,22 @@ y = df_dummy[target]
 
 
 #Modelling
-X = sm.add_constant(X)
-model = sm.GLM(y, X, sm.families.Binomial())
-result = model.fit()
+model = LogisticRegression(max_iter=500)
+result = model.fit(X, y)
+#X = sm.add_constant(X)
+#model = sm.GLM(y, X, sm.families.Binomial())
+#result = model.fit()
 
-def make_train_pred(model_result: 'GLMResultsWrapper', X_C, y_actual, cutoff=0.5):
-    train_pred = pd.DataFrame({'pred_prob': model_result.predict(X_C), 'y_actual': y_actual})
+def make_train_pred(model_result, X, y_actual, cutoff=0.5):
+    train_pred = pd.DataFrame(
+            {'pred_prob': model_result.predict_proba(X)[:,1],
+             'y_actual': y_actual})
     train_pred.insert(column='y_pred', loc=1,
         value=train_pred.pred_prob.map(lambda x: 1 if x>=cutoff else 0))
     return train_pred
 
 train_pred = make_train_pred(result, X, y, cutoff=CUTOFF)
+
 #print(train_pred.head())
 
 def get_acc_recall(train_pred: 'pd.DataFrame'):
@@ -80,7 +85,7 @@ pickle.dump(result, open('model.pkl', 'wb'))
 # If this file is run and not imported, print the metrics
 if __name__ == '__main__':
     get_acc_recall(train_pred)
-    
+
     
 # const                                                     1.0
 # TotalVisits                                               5.0

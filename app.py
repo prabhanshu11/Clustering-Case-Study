@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'prabhu'
 
 
-@app.route('/', methods=['POST'])
-@app.route('/home', methods=['POST'])
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/home', methods=['POST', 'GET'])
 def home_page():
     form = RegisterForm()
     if form.validate_on_submit():

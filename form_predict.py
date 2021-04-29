@@ -1,6 +1,6 @@
 import pickle
 from model import CUTOFF
-from numpy import isclose
+import numpy as np
 
 model = pickle.load(open('model.pkl', 'rb'))
 choices=['Olark Chat', 'Reference', 'College Website', 'Other']
@@ -17,15 +17,18 @@ def form_predict(data):
     
     RETURNS: {'Yes','No'} 
     """
-    X = [
-         1.0,                       # statsmodel requires const
+    X = np.array([
+         #1.0,                       # statsmodel requires const
          data[0],                   # Number of Visits
          data[1] * 60,              # Seconds spent on Website
          *source_map.get(data[2]),  # Source of the lead
          int(data[3])               # Is user a working professional
-    ]
-    output = model.predict(X)
+    ]).reshape(1,-1)
+    
+    output = model.predict_proba(X)[0,1]
 
     if output >= CUTOFF: return True
     else: return False
-
+    
+data = [2,20,'Other', True]
+form_predict(data)
