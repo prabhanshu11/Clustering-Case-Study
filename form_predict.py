@@ -26,9 +26,9 @@ def form_predict(data):
     ]).reshape(1,-1)
     
     output = model.predict_proba(X)[0,1]
-
+    print(output)
     if output >= CUTOFF: return True
     else: return False
     
-data = [2,20,'Other', True]
+data = [0,10,'Other', False]
 form_predict(data)
